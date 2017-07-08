@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>982490195639-41opk8e5fuqodtq0ibr6mqpsre0cast1.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.982490195639-41opk8e5fuqodtq0ibr6mqpsre0cast1</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDrU_6cCdIqch3bZw79uCD9C6nWzw8E14o</string>
+	<key>GCM_SENDER_ID</key>
+	<string>982490195639</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.komori.ChatApp</string>
+	<key>PROJECT_ID</key>
+	<string>chaty-d559d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>chaty-d559d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:982490195639:ios:942fe1df22ad35f2</string>
+	<key>DATABASE_URL</key>
+	<string>https://chaty-d559d.firebaseio.com</string>
+</dict>
+</plist>
