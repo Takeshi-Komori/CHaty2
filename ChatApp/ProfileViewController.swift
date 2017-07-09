@@ -98,7 +98,7 @@ class ProfileViewController: UIViewController , ProfileViewDelegate {
             self.navigationController?.present(naviVC, animated: true, completion: nil)
         } else {
             if Me.sharedMe.isResistered() {
-                ReportUtil.reportAlert(vc: self, user: self.user)
+                ReportUtil.reportAlert(vc: self, user: self.user, isOnChatroom: false)
             }else {
                 showAlert()
             }

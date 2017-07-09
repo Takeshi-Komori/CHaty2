@@ -56,11 +56,17 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         searchFlag = false
         getData()
         setupRefreshControl()
+        setUpEmptyLabel()
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(blockCreate),
                                                name: NSNotification.Name(rawValue: "blockCreate"),
                                             object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(blockDelete),
+                                               name: NSNotification.Name(rawValue: "blockCreate"),
+                                               object: nil)
     }
     
     func blockCreate() {
@@ -68,7 +74,11 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func blockDelete() {
-        
+        if Block.readBlockDataSource().count != 0 {
+            self.isBlockingSomeone = true
+        }else {
+             self.isBlockingSomeone = false
+        }
     }
     
     func setupNavigationBarBtn() {
@@ -78,12 +88,16 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func setUpSearchFilter() {
-        window = UIWindow.init(frame: self.view.bounds)
-        window.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        window.makeKeyAndVisible()
-        showUpSearchFilter()
-        setPickerView()
-        searchFilterViewAnimation()
+        if Me.sharedMe.isResistered() {
+            window = UIWindow.init(frame: self.view.bounds)
+            window.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+            window.makeKeyAndVisible()
+            showUpSearchFilter()
+            setPickerView()
+            searchFilterViewAnimation()
+        } else {
+            showAlert()
+        }
     }
     
     func showUpSearchFilter() {
@@ -107,15 +121,21 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func setUpEmptyLabel() {
-        if dataSource.count == 0 {
-            emptyLabel = UILabel(frame: CGRect(x: (UIScreen.main.bounds.width - 200) / 2,
-                                               y: (UIScreen.main.bounds.height - 20) / 2 - 50,
-                                               width: 200, height: 20))
-            emptyLabel.textColor = UIColor.lightGray
-            emptyLabel.textAlignment = NSTextAlignment.center
-            emptyLabel.font = UIFont.systemFont(ofSize: 13)
+        emptyLabel = UILabel(frame: CGRect(x: (UIScreen.main.bounds.width - 200) / 2,
+                                           y: (UIScreen.main.bounds.height - 20) / 2 - 50,
+                                           width: 200, height: 20))
+        emptyLabel.textColor = UIColor.lightGray
+        emptyLabel.textAlignment = NSTextAlignment.center
+        emptyLabel.font = UIFont.systemFont(ofSize: 13)
+        self.searchCollectionView?.addSubview(emptyLabel)
+        
+    }
+    
+    func setUpEmptyLabelValue() {
+        if dataSource.count != 0 {
+            emptyLabel.text = ""
+        } else {
             emptyLabel.text = "ユーザーが見つかりません"
-            self.searchCollectionView?.addSubview(emptyLabel)
         }
     }
     
@@ -129,7 +149,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         User.readUsers(isBlockingSomeone: self.isBlockingSomeone, completionHandler: { dataSource in
             self.dataSource = dataSource as! Array<User>
             self.searchCollectionView?.reloadData()
-            self.setUpEmptyLabel()
+            self.setUpEmptyLabelValue()
             self.refreshControl.endRefreshing()
         })
         
@@ -144,7 +164,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         User.readUsers(isBlockingSomeone: self.isBlockingSomeone, completionHandler: { dataSource in
             self.dataSource = dataSource as! Array<User>
             self.searchCollectionView?.reloadData()
-            self.setUpEmptyLabel()
+            self.setUpEmptyLabelValue()
             SVProgressHUD.dismiss()
         })
         
@@ -242,8 +262,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     //ブロックの時の挙動
     func researchBtnTapped() {
         SVProgressHUD.show()
-        UserSpec.researchUserSpec(gender: self.searchFilterView.genderSegmentValue, age: self.searchFilterView.ageSegmentValue, place: self.searchFilterView.placeLabelValue, completionHandler: { (dataSource) in
-            print(dataSource)
+        UserSpec.researchUserSpec(isBlocingSomeone: self.isBlockingSomeone, gender: self.searchFilterView.genderSegmentValue, age: self.searchFilterView.ageSegmentValue, place: self.searchFilterView.placeLabelValue, completionHandler: { (dataSource) in
             self.dataSource = dataSource as! Array<User>
             self.searchCollectionView?.reloadData()
             UIView.animate(withDuration: 0.3) {
@@ -252,11 +271,25 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     let window = UIApplication.shared.delegate?.window
                     window??.makeKeyAndVisible()
-                    self.setUpEmptyLabel()
+                    self.setUpEmptyLabelValue()
                     SVProgressHUD.dismiss()
                 }
             }
         })
+    }
+    
+    func showAlert() {
+        let alert = UIAlertController(title:"登録してください", message: "この機能はまだ使えません", preferredStyle: UIAlertControllerStyle.alert)
+        let action = UIAlertAction(title: "登録する", style: UIAlertActionStyle.default, handler: {
+            (action: UIAlertAction!) in
+            let profileEditVC = ProfileEditViewController()
+            let navi = UINavigationController(rootViewController: profileEditVC)
+            self.present(navi, animated: true, completion: nil)
+        })
+        
+        alert.addAction(action)
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     deinit {

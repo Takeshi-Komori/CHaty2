@@ -95,15 +95,14 @@ class MessagesViewController: JSQMessagesViewController {
         }else {
             SVProgressHUD.show()
             let imgRef = User.returnImgStrorageRef(userID: opponentUser.userID)
-            imgRef.getData(maxSize: 1 * 3100 * 3100) { (data, error) in
+            imgRef.getData(maxSize: 1 * 4000 * 4000) { (data, error) in
                 if error != nil {
-                    print("error")
                     return
                 }
                 self.outgoingAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(data: data!), diameter: 64)
-                UserDefaults.standard.set(data, forKey: self.opponentUser.userID)
                 self.collectionView.reloadData()
                 SVProgressHUD.dismiss()
+                
             }
         }
     }
@@ -164,7 +163,7 @@ class MessagesViewController: JSQMessagesViewController {
     }
     
     @objc func reportAlert() {
-        ReportUtil.reportAlert(vc: self, user: opponentUser)
+        ReportUtil.reportAlert(vc: self, user: opponentUser, isOnChatroom: true)
     }
     
     override func didReceiveMemoryWarning() {

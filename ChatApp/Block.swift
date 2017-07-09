@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class Block: NSObject, NSCoding {
     var userID: String!
@@ -15,6 +16,7 @@ class Block: NSObject, NSCoding {
     
     //ローカルで保存
     init(userID: String, userName: String) {
+        super.init()
         self.userID = userID
         self.createDate = Date()
         self.userName = userName
@@ -32,6 +34,61 @@ class Block: NSObject, NSCoding {
         aCoder.encode(self.userName, forKey: "userName")
     }
     
+    //firebase
+    func createBlock(userID: String, userName: String) {
+        let now = Date()
+        let dateFormatter = DateFormatter()
+        let date: String!
+        
+        dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP") as Locale!
+        dateFormatter.timeStyle = .medium
+        dateFormatter.dateStyle = .medium
+        date = dateFormatter.string(from: now)
+        
+        let ref = Database.database().reference()
+        let blockRef4Me = ref.child("blocks").child(Me.sharedMe.returnInfo(key: "userID") as! String).child(userID)
+        let blockRef4You = ref.child("blocks").child(userID).child(Me.sharedMe.returnInfo(key: "userID") as! String)
+        
+        let post4Me = [
+            "date" : date,
+            "userName" : userName
+            ] as [String : AnyObject]
+        
+        let post4You = [
+            "date" : date,
+            "userName" : Me.sharedMe.returnInfo(key: "name")
+            ] as [String : AnyObject]
+        
+        blockRef4Me.setValue(post4Me)
+        blockRef4You.setValue(post4You)
+    }
+    
+    static func readBlockFromFirebase() {
+        let ref = Database.database().reference()
+        let blockRef4You = ref.child("blocks").child(Me.sharedMe.returnInfo(key: "userID") as! String)
+        blockRef4You.observeSingleEvent(of: DataEventType.value, with: { (snapshot) in
+            if snapshot.value is NSNull {
+                return
+            }
+            let blockDataFromFirebase = snapshot.value as! [String : [String : AnyObject]]            
+            for blockD in blockDataFromFirebase {
+                let block = Block.init(userID: blockD.key, userName: blockD.value["userName"] as! String)
+                self.saveBlock(block: block)
+            }
+        })
+    }
+    
+    static func deleteBlockData(userID: String) {
+        let ref = Database.database().reference()
+        let deleteRef = ref.child("blocks").child(Me.sharedMe.returnInfo(key: "userID") as! String).child(userID)
+        let deleteRef2 = ref.child("blocks").child(userID).child(Me.sharedMe.returnInfo(key: "userID") as! String)
+        deleteRef.removeValue()
+        deleteRef2.removeValue()
+        self.deleteBlockDataSource(userID: userID)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "blockDelete"), object: nil)
+    }
+    
+    //local
     static func saveBlock(block: Block) {
         var archiveDataSource = Array<Data>()
         let archiveData = NSKeyedArchiver.archivedData(withRootObject: block)
@@ -48,16 +105,25 @@ class Block: NSObject, NSCoding {
     
     static func readBlockDataSource() -> Array<Block> {
         var dataSource = Array<Block>()
-        let blockDataSource = UserDefaults.standard.object(forKey: "BLOCK_LIST") as! Array<Data>
-        for block in blockDataSource {
-            let d = NSKeyedUnarchiver.unarchiveObject(with: block) as! Block
-            dataSource.append(d)
+        if UserDefaults.standard.object(forKey: "BLOCK_LIST") != nil {
+            let blockDataSource = UserDefaults.standard.object(forKey: "BLOCK_LIST") as! Array<Data>
+            for block in blockDataSource {
+                let d = NSKeyedUnarchiver.unarchiveObject(with: block) as! Block
+                dataSource.append(d)
+            }
         }
         return dataSource
     }
     
-    func deleteBlock() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "blockDelete"), object: nil)
+    static func deleteBlockDataSource(userID: String) {
+        let blockDataSource = self.readBlockDataSource()
+        UserDefaults.standard.removeObject(forKey: "BLOCK_LIST")
+        for blockD in blockDataSource {
+            if blockD.userID != userID {
+                let block = Block.init(userID: blockD.userID, userName: blockD.userName)
+                self.saveBlock(block: block)
+            }
+        }
     }
     
     static func checkBlockSomeone() {

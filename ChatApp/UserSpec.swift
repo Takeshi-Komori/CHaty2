@@ -31,7 +31,11 @@ class UserSpec: NSObject {
         
     }
     
-    static func researchUserSpec(gender: String, age: String, place: String, completionHandler: @escaping (Array<Any>) -> Void) {
+    
+    
+    //検索 blockしていた場合や自分を含めないなど考慮すると、長くなった
+    static func researchUserSpec(isBlocingSomeone: Bool ,gender: String, age: String, place: String, completionHandler: @escaping (Array<Any>) -> Void) {
+        let brockDataSource = Block.readBlockDataSource()
         var userDataSource = Array<User>()
         let ref = Database.database().reference()
         var specRef = ref.child("userSpecs").child(gender).child(age).child(place)
@@ -44,9 +48,29 @@ class UserSpec: NSObject {
                     let users = snapshot.value as! [String : [String : AnyObject]]
                     for user in users {
                         User.readUser4UserSpec(userID: user.key, completionHandler: { (user) in
-                            userDataSource.append(user)
-                            if userDataSource.count == users.count {
-                                completionHandler(userDataSource)
+                            if user.userID != Me.sharedMe.returnInfo(key: "userID") as? String {
+                                if isBlocingSomeone {
+                                    var count = 0
+                                    for blockD in brockDataSource {
+                                        if blockD.userID != user.userID {
+                                            count += 1
+                                            if brockDataSource.count == count {
+                                                userDataSource.append(user)
+                                            }
+                                        }
+                                    }
+                                }else {
+                                    userDataSource.append(user)
+                                }
+                            }
+                            if isBlocingSomeone {
+                                if userDataSource.count == users.count || userDataSource.count == users.count - brockDataSource.count || userDataSource.count == users.count - brockDataSource.count - 1 {
+                                    completionHandler(userDataSource)
+                                }
+                            } else {
+                                if userDataSource.count == users.count || userDataSource.count == users.count - 1 {
+                                    completionHandler(userDataSource)
+                                }
                             }
                         })
                     }
@@ -63,9 +87,30 @@ class UserSpec: NSObject {
                     for usersInAnotherPrefecture in usersAllPrefecture {
                         for userSmallInfo in usersInAnotherPrefecture.value {
                             User.readUser4UserSpec(userID: userSmallInfo.key, completionHandler: { (user) in
-                                userDataSource.append(user)
-                                if userDataSource.count == checkArrayCount(array: usersAllPrefecture) {
-                                    completionHandler(userDataSource)
+                                if user.userID != Me.sharedMe.returnInfo(key: "userID") as? String {
+                                    if isBlocingSomeone {
+                                        var count2 = 0
+                                        for blockD in brockDataSource {
+                                            if blockD.userID != user.userID {
+                                                count2 += 1
+                                                if brockDataSource.count == count2 {
+                                                    userDataSource.append(user)
+                                                }
+                                            }
+                                        }
+                                    }else {
+                                        userDataSource.append(user)
+                                    }
+                                }
+                                if isBlocingSomeone {
+                                    if userDataSource.count == checkArrayCount(array: usersAllPrefecture) || userDataSource.count == checkArrayCount(array: usersAllPrefecture) - brockDataSource.count || userDataSource.count == checkArrayCount(array: usersAllPrefecture) - brockDataSource.count - 1 {
+                                        completionHandler(userDataSource)
+                                    }
+                                } else {
+                                    if userDataSource.count == checkArrayCount(array: usersAllPrefecture) ||
+                                        userDataSource.count == checkArrayCount(array: usersAllPrefecture) - 1 {
+                                        completionHandler(userDataSource)
+                                    }
                                 }
                             })
                         }
@@ -85,4 +130,5 @@ class UserSpec: NSObject {
         }
         return count
     }
+    
 }

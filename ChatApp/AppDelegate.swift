@@ -19,10 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch
         FirebaseApp.configure()
         
-        UserDefaults.standard.removeObject(forKey: "BLOCK_LIST")
-        UserDefaults.standard.removeObject(forKey: "ME")
-        UserDefaults.standard.removeObject(forKey: "ME_IMAGE")
-        
         let tabbarVC = TabbarViewController()
         tabbarVC.setTabbarController()
         
@@ -34,7 +30,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().tintColor = UIColor.rgb(r: 27, g: 149, b: 224, alpha: 1.0)
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
-                        
+        
+//        //アプリ立ち上げ時に、ローカルにブロックの情報を追加
+        if Me.sharedMe.isResistered() {
+            UserDefaults.standard.removeObject(forKey: "BLOCK_LIST")
+            Block.readBlockFromFirebase()
+        }
+        
+        
         return true
     }
     

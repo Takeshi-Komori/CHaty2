@@ -111,6 +111,5 @@ class User: NSObject {
         let uniqueValues = orderedSet.array as! Array<User>
         return uniqueValues
     }
-
     
 }

@@ -15,9 +15,8 @@ class BlockTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "ブロックリスト"
-        
         //ローカルにあるBlockリストを呼び出す
-        blockDataSource = Block.readBlockDataSource() as! Array<Block>
+        blockDataSource = Block.readBlockDataSource()
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -25,12 +24,48 @@ class BlockTableViewController: UITableViewController {
         tableView.register(BlockListTableViewCell.self, forCellReuseIdentifier: "BlockListTableViewCell")
         tableView.backgroundColor = UIColor.rgb(r: 241, g: 248, b: 255, alpha: 1.0)
         setEmptyLabel()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(blockCreate),
+                                               name: NSNotification.Name(rawValue: "blockCreate"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(blockDelete),
+                                               name: NSNotification.Name(rawValue: "blockDelete"),
+                                               object: nil)
+        
+        self.setUpNavigationBarItemBtn()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         settingEmtptyLabelText()
     }
+    
+    func blockCreate() {
+        tableView.reloadData()
+    }
+    
+    func blockDelete() {
+        
+    }
+    
+    func refresh() {
+
+    }
+    
+    func setUpNavigationBarItemBtn() {
+        navigationItem.setHidesBackButton(true, animated: false)
+        let leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(tapLeftBarButton(sender:)))
+        leftBarButtonItem.tintColor = UIColor.white
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem
+    }
+    
+    func tapLeftBarButton(sender: UIBarButtonItem) {
+        navigationController?.popViewController(animated: true)
+    }
+    
 
     func setEmptyLabel() {
         emptyLabel = UILabel(frame: CGRect(x: (UIScreen.main.bounds.width - 200) / 2,
@@ -77,6 +112,17 @@ class BlockTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            Block.deleteBlockData(userID: self.blockDataSource[indexPath.row].userID)
+            self.blockDataSource.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            blockDataSource = Block.readBlockDataSource()
+            settingEmtptyLabelText()
+            tableView.reloadData()
+        }
     }
 
     /*

@@ -55,28 +55,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ChatApp/SearchViewController.swift"
-            timestampString = "521192232.369353"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
-            landmarkName = "refresh()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "ChatApp/User.swift"
-            timestampString = "521187538.239341"
+            timestampString = "521277761.378926"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
             landmarkName = "readUser4UserSpec(userID:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -87,13 +71,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ChatApp/SearchViewController.swift"
-            timestampString = "521193031.223409"
+            filePath = "ChatApp/User.swift"
+            timestampString = "521277772.75469"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "262"
-            endingLineNumber = "262"
-            landmarkName = "deinit"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "readUser4UserSpec(userID:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -103,29 +87,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ChatApp/SearchViewController.swift"
-            timestampString = "521193031.807519"
+            filePath = "ChatApp/UserSpec.swift"
+            timestampString = "521277810.717441"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "263"
-            endingLineNumber = "263"
-            landmarkName = "deinit"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ChatApp/SearchViewController.swift"
-            timestampString = "521193032.386058"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "264"
-            endingLineNumber = "264"
-            landmarkName = "deinit"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "researchUserSpec(isBlocingSomeone:gender:age:place:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

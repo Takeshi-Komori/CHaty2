@@ -9,7 +9,7 @@
 import UIKit
 
 class ReportUtil: NSObject {
-    static func reportAlert(vc: UIViewController, user: User) {
+    static func reportAlert(vc: UIViewController, user: User, isOnChatroom: Bool) {
         let actionSheet = UIAlertController(title: "ユーザーレポート", message: "以下から選択してください", preferredStyle: UIAlertControllerStyle.actionSheet)
         
         let action1 = UIAlertAction(title: "ユーザー通報する", style: UIAlertActionStyle.default, handler: {
@@ -21,7 +21,13 @@ class ReportUtil: NSObject {
             (action: UIAlertAction!) in
             print(user)
             let block = Block.init(userID: user.userID, userName: user.name)
+            block.createBlock(userID: user.userID, userName: user.name)
             Block.saveBlock(block: block)
+            
+            if isOnChatroom {
+                Chatroom().deleteChatroom(opponentUserID2: user.userID, chatroomID: user.chatroomID)
+            }
+        
         })
         
         let cancel = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.cancel, handler: {
@@ -34,4 +40,9 @@ class ReportUtil: NSObject {
         
         vc.present(actionSheet, animated: true, completion: nil)
     }
+    
+    
+    
+    
+    
 }
