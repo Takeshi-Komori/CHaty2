@@ -27,22 +27,23 @@ class ChatListTableViewCell: UITableViewCell {
     }
     
     func setUI(user: User, message: String) {
-        userImageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 100, height: 100))
+        userImageView = UIImageView(frame: CGRect(x: 5, y: 10, width: 40, height: 40))
         userImageView?.sd_setImage(with: User.returnImgStrorageRef(userID: user.userID))
-        userImageView?.layer.cornerRadius = 50
+        userImageView?.layer.cornerRadius = 20
         userImageView?.clipsToBounds = true
         userImageView?.contentMode = UIViewContentMode.scaleAspectFill
         self.contentView.addSubview(userImageView!)
         
-        nameLabel = UILabel(frame: CGRect(x: (userImageView?.right)! + 10, y: (userImageView?.top)!, width: 200, height: 30))
+        nameLabel = UILabel(frame: CGRect(x: (userImageView?.right)! + 10, y: (userImageView?.top)!, width: 200, height: 20))
         nameLabel?.text = user.name
+        nameLabel?.font = UIFont.systemFont(ofSize: 14)
         self.contentView.addSubview(nameLabel!)
         
-        messageLabel = UILabel(frame: CGRect(x: (userImageView?.right)! + 10, y: (nameLabel?.bottom)! + 10, width: 200, height: 30))
-        messageLabel?.text = message
-        messageLabel?.textColor = UIColor.lightGray
-        messageLabel?.font = UIFont.systemFont(ofSize: 15)
-        self.contentView.addSubview(messageLabel!)
+//        messageLabel = UILabel(frame: CGRect(x: (userImageView?.right)! + 10, y: (nameLabel?.bottom)! + 4, width: 200, height: 15))
+//        messageLabel?.text = message
+//        messageLabel?.textColor = UIColor.lightGray
+//        messageLabel?.font = UIFont.systemFont(ofSize: 13)
+//        self.contentView.addSubview(messageLabel!)
    
     }
 

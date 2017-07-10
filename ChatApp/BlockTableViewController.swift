@@ -16,7 +16,7 @@ class BlockTableViewController: UITableViewController {
         super.viewDidLoad()
         navigationItem.title = "ブロックリスト"
         //ローカルにあるBlockリストを呼び出す
-        blockDataSource = Block.readBlockDataSource()
+        createBlockDataSourceInVC()
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -28,11 +28,6 @@ class BlockTableViewController: UITableViewController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(blockCreate),
                                                name: NSNotification.Name(rawValue: "blockCreate"),
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(blockDelete),
-                                               name: NSNotification.Name(rawValue: "blockDelete"),
                                                object: nil)
         
         self.setUpNavigationBarItemBtn()
@@ -47,12 +42,20 @@ class BlockTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    func blockDelete() {
-        
-    }
-    
     func refresh() {
 
+    }
+    
+    func createBlockDataSourceInVC() {
+        let dataSource = Block.readBlockDataSource()
+        var dataSource2 = Array<Block>()
+        for d in dataSource {
+            if d.isfromMe != "false" {
+                dataSource2.append(d)
+            }
+        }
+        self.blockDataSource = dataSource2
+        
     }
     
     func setUpNavigationBarItemBtn() {
@@ -123,6 +126,10 @@ class BlockTableViewController: UITableViewController {
             settingEmtptyLabelText()
             tableView.reloadData()
         }
+    }
+    
+    deinit {
+        
     }
 
     /*

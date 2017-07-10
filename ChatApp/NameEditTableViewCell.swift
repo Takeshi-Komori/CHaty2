@@ -29,8 +29,9 @@ class NameEditTableViewCell: UITableViewCell , UITextFieldDelegate{
     }
     
     func setUI() {
-        let label = UILabel(frame: CGRect.init(x: 15, y: 12.5, width: 50, height: 25))
-        label.text = "名前"
+        let label = UILabel(frame: CGRect.init(x: 15, y: 12.5, width: 80, height: 25))
+        label.text = "名前(必須)"
+        label.font = UIFont.systemFont(ofSize: 15)
         contentView.addSubview(label)
         
         textfield = UITextField(frame: CGRect.init(x: label.right + 15, y: label.top, width: screenWidth - label.right - 35, height: 25))

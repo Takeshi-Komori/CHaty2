@@ -36,8 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults.standard.removeObject(forKey: "BLOCK_LIST")
             Block.readBlockFromFirebase()
         }
-        
-        
+
         return true
     }
     

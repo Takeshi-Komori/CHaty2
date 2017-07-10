@@ -39,7 +39,7 @@ class ImageEditTableViewCell: UITableViewCell {
         self.contentView.addSubview(button)
         
         let label = UILabel(frame: CGRect.init(x: button.right + 15, y: 45, width: 200, height: 30))
-        label.text = "プロフィール画像を設定(必須)"
+        label.text = "プロフィール画像(必須)"
         self.contentView.addSubview(label)
         
     }

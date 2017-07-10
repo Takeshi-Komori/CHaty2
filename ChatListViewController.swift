@@ -11,7 +11,7 @@ import SVProgressHUD
 
 class ChatListViewController: UITableViewController {
 
-    let messageTexts = ["あ","い","y","lllllゃ","kkk"]
+//    let messageTexts = ["あ","い","y","lllllゃ","kkk"]
     var chatroomBox: [String]!
     let screenWidth = CGFloat( UIScreen.main.bounds.size.width);
     let screenHeight = CGFloat( UIScreen.main.bounds.size.height);
@@ -76,13 +76,14 @@ class ChatListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ChatListTableViewCell = ChatListTableViewCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "ChatListTableViewCell") 
         if dataSource.count > 0 {
-            cell.setUI(user: dataSource[indexPath.row], message: messageTexts[indexPath.row])
+//            cell.setUI(user: dataSource[indexPath.row], message: messageTexts[indexPath.row])
+            cell.setUI(user: dataSource[indexPath.row], message: "")
         }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 60
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

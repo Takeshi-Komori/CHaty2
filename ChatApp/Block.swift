@@ -13,25 +13,29 @@ class Block: NSObject, NSCoding {
     var userID: String!
     var userName: String!
     var createDate: Date!
+    var isfromMe: String!
     
     //ローカルで保存
-    init(userID: String, userName: String) {
+    init(userID: String, userName: String, isfromMe: String) {
         super.init()
         self.userID = userID
         self.createDate = Date()
         self.userName = userName
+        self.isfromMe = isfromMe
     }
     
     required init?(coder aDecoder: NSCoder) {
         self.userID = aDecoder.decodeObject(forKey: "userID") as! String
         self.createDate = aDecoder.decodeObject(forKey: "createDate") as! Date
         self.userName = aDecoder.decodeObject(forKey: "userName") as! String
+        self.isfromMe = aDecoder.decodeObject(forKey: "isfromMe") as! String
     }
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(self.userID, forKey: "userID")
         aCoder.encode(self.createDate, forKey: "createDate")
         aCoder.encode(self.userName, forKey: "userName")
+        aCoder.encode(self.isfromMe, forKey: "isfromMe")
     }
     
     //firebase
@@ -51,12 +55,14 @@ class Block: NSObject, NSCoding {
         
         let post4Me = [
             "date" : date,
-            "userName" : userName
+            "userName" : userName,
+            "isfromMe" : "true"
             ] as [String : AnyObject]
         
         let post4You = [
             "date" : date,
-            "userName" : Me.sharedMe.returnInfo(key: "name")
+            "userName" : Me.sharedMe.returnInfo(key: "name"),
+            "isfromMe" : "false"
             ] as [String : AnyObject]
         
         blockRef4Me.setValue(post4Me)
@@ -72,7 +78,7 @@ class Block: NSObject, NSCoding {
             }
             let blockDataFromFirebase = snapshot.value as! [String : [String : AnyObject]]            
             for blockD in blockDataFromFirebase {
-                let block = Block.init(userID: blockD.key, userName: blockD.value["userName"] as! String)
+                let block = Block.init(userID: blockD.key, userName: blockD.value["userName"] as! String, isfromMe: blockD.value["isfromMe"] as! String)
                 self.saveBlock(block: block)
             }
         })
@@ -85,7 +91,6 @@ class Block: NSObject, NSCoding {
         deleteRef.removeValue()
         deleteRef2.removeValue()
         self.deleteBlockDataSource(userID: userID)
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "blockDelete"), object: nil)
     }
     
     //local
@@ -120,13 +125,9 @@ class Block: NSObject, NSCoding {
         UserDefaults.standard.removeObject(forKey: "BLOCK_LIST")
         for blockD in blockDataSource {
             if blockD.userID != userID {
-                let block = Block.init(userID: blockD.userID, userName: blockD.userName)
+                let block = Block.init(userID: blockD.userID, userName: blockD.userName, isfromMe: blockD.isfromMe)
                 self.saveBlock(block: block)
             }
         }
-    }
-    
-    static func checkBlockSomeone() {
-      
     }
 }

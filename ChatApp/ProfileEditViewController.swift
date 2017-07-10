@@ -9,9 +9,9 @@
 import UIKit
 import SVProgressHUD
 
-class ProfileEditViewController: UIViewController ,UIPickerViewDelegate, UIPickerViewDataSource, ImageEditTableViewCellDelegate, UIImagePickerControllerDelegate, UITableViewDelegate,UITableViewDataSource, NameEditTableViewCellDelegate, UINavigationControllerDelegate, BiographyEditTableViewCellDelegate {
+class ProfileEditViewController: UITableViewController ,UIPickerViewDelegate, UIPickerViewDataSource, ImageEditTableViewCellDelegate, UIImagePickerControllerDelegate, NameEditTableViewCellDelegate, UINavigationControllerDelegate, BiographyEditTableViewCellDelegate {
     
-    private var tableView: UITableView!
+//    private var tableView: UITableView!
     private var pickerView: UIPickerView!
     private let pickerViewHeight: CGFloat = 160
     private var pickerToolbar: UIToolbar!
@@ -25,11 +25,12 @@ class ProfileEditViewController: UIViewController ,UIPickerViewDelegate, UIPicke
     private var currentAge: String!
     private var currentPlace: String!
     private var currentBiography: String!
-    private var textField: UITextField!
     private var textView: UITextView!
     private var editImageFlg: Bool!
     private var afterResistering: Bool!
-    
+    private var textViewEditing: Bool!
+    private var bioEditCell: BiographyEditTableViewCell!
+    private var window: UIWindow!
     
     let sectionTitles = ["","基本情報","自己紹介文"]
     
@@ -38,7 +39,6 @@ class ProfileEditViewController: UIViewController ,UIPickerViewDelegate, UIPicke
         //        // Do any additional setup after loading the view, typically from a nib.
         self.title = "プロフィール設定"
         self.tableView = UITableView(frame: CGRect(x:0,y:0,width:self.view.frame.width,height:self.view.frame.height), style: .grouped)
-        self.view.addSubview(tableView)
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -49,6 +49,7 @@ class ProfileEditViewController: UIViewController ,UIPickerViewDelegate, UIPicke
         self.tableView.register(BiographyEditTableViewCell.self, forCellReuseIdentifier: "BiographyEditTableViewCell")
         
         setBarButtonItem()
+        setWindow()
         setPickerView()
         setPickerItems()
         
@@ -62,59 +63,68 @@ class ProfileEditViewController: UIViewController ,UIPickerViewDelegate, UIPicke
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tableView.reloadSections(NSIndexSet.init(index: 0) as IndexSet, with: UITableViewRowAnimation.fade)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeShown), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
-        
-        if Me.sharedMe.isResistered() {
-            
-        }
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeShown), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
+//        
+//        if Me.sharedMe.isResistered() {
+//            
+//        }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidHide, object: nil)
-    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+//        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidHide, object: nil)
+//    }
+//    
+//    func keyboardWillBeShown(notification: Notification) {
+//        if textViewEditing != nil && textViewEditing {
+//            if let userInfo = notification.userInfo {
+//                if let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey], let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] {
+//                    let keyboardFrame4normal = (keyboardFrame as AnyObject).cgRectValue
+//                    
+//                    print(keyboardFrame4normal)
+//                    
+//                    UIView.animate(withDuration: animationDuration as! TimeInterval, animations: { 
+//                        
+//                    })
+//                    
+//                    let convertedKeyboardFrame = bioEditCell.textView.convert(keyboardFrame4normal!, to: nil)
+////                    let offsetY: CGFloat = bioEditCell.textView.frame.maxY - convertedKeyboardFrame.minY
+//                    let offsetY: CGFloat = convertedKeyboardFrame.minY - bioEditCell.frame.maxY
+//                    print(keyboardFrame4normal)
+//                    print(convertedKeyboardFrame.minY)
+//                    print(bioEditCell.top)
+//                    print(bioEditCell.frame.maxY)
+//                    if offsetY < 0 { return }
+//                    updateScrollViewSize(moveSize: offsetY, duration: animationDuration as! TimeInterval)
+//                }
+//            }
+//        }
+//    }
+
+//    func updateScrollViewSize(moveSize: CGFloat, duration: TimeInterval) {
+//        UIView.beginAnimations("ResizeForKeyboard", context: nil)
+//        UIView.setAnimationDuration(duration)
+//        let contentInsets = UIEdgeInsetsMake(0, 0, moveSize, 0)
+//        self.tableView.contentInset = contentInsets
+//        self.tableView.scrollIndicatorInsets = contentInsets
+//        self.tableView.contentOffset = CGPoint(x: 0, y: moveSize)
+//        UIView.commitAnimations()
+//    }
+//    
+//    func keyboardWillBeHidden(notification: Notification) {
+//        if textViewEditing != nil && textViewEditing {
+//            self.tableView.contentInset = UIEdgeInsets.zero
+//            self.tableView.scrollIndicatorInsets = UIEdgeInsets.zero
+//            textViewEditing = false
+//        }
+//    }
     
-//    http://qiita.com/ysk_1031/items/3adb1c1bf5678e7e6f98
-    
-    func keyboardWillBeShown(notification: Notification) {
-//        let cell = tableView.cellForRow(at:pickerIndexPath) as! NameEditTableViewCell
-        if let userInfo = notification.userInfo {
-            if let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey], let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] {
-                let keyboardFrame4normal = (keyboardFrame as AnyObject).cgRectValue
-                
-                let convertedKeyboardFrame = self.tableView.convert(keyboardFrame4normal!, to: nil)
-//                print(cell)
-                let offsetY: CGFloat = self.textField.frame.maxY - convertedKeyboardFrame.minY
-//                print("---------------------")
-//                print(keyboardFrame4normal)
-//                print(convertedKeyboardFrame)
-//                print(self.textField.frame.origin.y)
-//                print(offsetY)
-//               
-                if offsetY < 0 { return }
-                updateScrollViewSize(moveSize: offsetY, duration: animationDuration as! TimeInterval)
-                
-            }
-        }
-    }
-    
-    func updateScrollViewSize(moveSize: CGFloat, duration: TimeInterval) {
-        UIView.beginAnimations("ResizeForKeyboard", context: nil)
-        UIView.setAnimationDuration(duration)
-        
-        let contentInsets = UIEdgeInsetsMake(0, 0, moveSize, 0)
-        self.tableView.contentInset = contentInsets
-        self.tableView.scrollIndicatorInsets = contentInsets
-        self.tableView.contentOffset = CGPoint(x: 0, y: moveSize)
-        
-        UIView.commitAnimations()
-    }
-    
-    func keyboardWillBeHidden(notification: Notification) {
-        self.tableView.contentInset = UIEdgeInsets.zero
-        self.tableView.scrollIndicatorInsets = UIEdgeInsets.zero
+    private func setWindow() {
+        window = UIWindow.init(frame: self.view.bounds)
+        window.backgroundColor = UIColor.clear
+//        window.makeKeyAndVisible()
     }
     
     private func setPickerItems() {
@@ -130,21 +140,19 @@ class ProfileEditViewController: UIViewController ,UIPickerViewDelegate, UIPicke
     
     private func setPickerView() {
         let width = self.view.frame.width
-        let height = self.view.frame.height
+        let height = self.tableView.bottom
         
         pickerView = UIPickerView(frame: CGRect.init(x: 0, y: height + toolbarHeight, width: width, height: pickerViewHeight))
-        
         pickerView.dataSource = self
         pickerView.delegate = self
         pickerView.backgroundColor = UIColor.gray
-        self.view.addSubview(pickerView)
+        self.window.addSubview(pickerView)
         
         pickerToolbar = UIToolbar(frame: CGRect.init(x: 0, y: height, width: width, height: toolbarHeight))
         let flexible = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
         let doneBtn = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.doneBtnTapped))
         pickerToolbar.items = [flexible, doneBtn]
-        self.view.addSubview(pickerToolbar)
-        
+        self.window.addSubview(pickerToolbar)
     }
     
     @objc private func doneBtnTapped() {
@@ -157,6 +165,8 @@ class ProfileEditViewController: UIViewController ,UIPickerViewDelegate, UIPicke
             }
             //選択を解除する
             self.tableView.deselectRow(at: self.pickerIndexPath, animated: true)
+            let window = UIApplication.shared.delegate?.window
+            window??.makeKeyAndVisible()
         }
     }
     
@@ -218,13 +228,12 @@ class ProfileEditViewController: UIViewController ,UIPickerViewDelegate, UIPicke
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }
-
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return 1
@@ -237,52 +246,52 @@ class ProfileEditViewController: UIViewController ,UIPickerViewDelegate, UIPicke
         }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
             
         case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ImageEditTableViewCell") as! ImageEditTableViewCell
+            let cell: ImageEditTableViewCell = ImageEditTableViewCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "ImageEditTableViewCell")
             cell.setUI()
             cell.delegate = self
             return cell
         case 1:
             switch indexPath.row {
             case 0:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "NameEditTableViewCell") as! NameEditTableViewCell
+                let cell: NameEditTableViewCell = NameEditTableViewCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "NameEditTableViewCell")
                 cell.setUI()
                 cell.delegate = self
-                self.textField = cell.textfield
                 return cell
             case 1:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "SubInfoEditTableViewCell") as! SubInfoEditTableViewCell
+                let cell: SubInfoEditTableViewCell = SubInfoEditTableViewCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "SubInfoEditTableViewCell")
                 cell.setUI(cellNumber: indexPath.row)
                 cell.infoLabel.text = currentGender
                 return cell
             case 2:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "SubInfoEditTableViewCell") as! SubInfoEditTableViewCell
+                let cell: SubInfoEditTableViewCell = SubInfoEditTableViewCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "SubInfoEditTableViewCell")
                 cell.setUI(cellNumber: indexPath.row)
                 cell.infoLabel.text = currentAge
                 return cell
             case 3:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "SubInfoEditTableViewCell") as! SubInfoEditTableViewCell
+                let cell: SubInfoEditTableViewCell = SubInfoEditTableViewCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "SubInfoEditTableViewCell")
                 cell.setUI(cellNumber: indexPath.row)
                 cell.infoLabel.text = currentPlace
                 return cell
             default: break
             }
         case 2:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "BiographyEditTableViewCell") as! BiographyEditTableViewCell
+            let cell: BiographyEditTableViewCell = BiographyEditTableViewCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "BiographyEditTableViewCell")
             cell.setUI()
             cell.delegate = self
+            self.bioEditCell = cell
             return cell
             
         default: break
         }
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as UITableViewCell
+        let cell: UITableViewCell = UITableViewCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "Cell")
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
             return 120
@@ -295,11 +304,11 @@ class ProfileEditViewController: UIViewController ,UIPickerViewDelegate, UIPicke
         }
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sectionTitles[section]
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         pickerIndexPath = indexPath
         
         switch indexPath.section {
@@ -310,6 +319,7 @@ class ProfileEditViewController: UIViewController ,UIPickerViewDelegate, UIPicke
             case 0:
                 print("保留")
             case 1...3:
+                window.makeKeyAndVisible()
                 pickerView.reloadAllComponents()
                 UIView.animate(withDuration: 0.2, animations: {
                     self.pickerToolbar.frame = CGRect(x: 0, y: self.view.frame.height - self.pickerViewHeight - self.toolbarHeight, width: self.view.frame.width, height: self.toolbarHeight)
@@ -430,10 +440,15 @@ class ProfileEditViewController: UIViewController ,UIPickerViewDelegate, UIPicke
         cell.textfield.text = currentName
     }
     
-    //TextView
+    //BiographyEditTableViewCellDelegate ---------
     func textViewDidEndEditing(cell: BiographyEditTableViewCell, value: String) {
         currentBiography = value
         cell.textView.text = currentBiography
+    }
+    
+    //--------------------------------------------
+    func textViewTapped() {
+        self.textViewEditing = true
     }
     
     

@@ -8,8 +8,11 @@
 
 import UIKit
 
+
+
 protocol BiographyEditTableViewCellDelegate {
     func textViewDidEndEditing(cell: BiographyEditTableViewCell, value: String) -> ()
+    func textViewTapped()
 }
 
 class BiographyEditTableViewCell: UITableViewCell ,UITextViewDelegate{
@@ -35,6 +38,7 @@ class BiographyEditTableViewCell: UITableViewCell ,UITextViewDelegate{
         textView.text = Me.sharedMe.returnInfo(key: "biography") as! String == "未設定" ? "": Me.sharedMe.returnInfo(key: "biography") as! String
         textView.returnKeyType = .done
         textView.delegate = self
+        textView.tag = 1
         contentView.addSubview(textView)
     }
     
@@ -42,6 +46,11 @@ class BiographyEditTableViewCell: UITableViewCell ,UITextViewDelegate{
         if text == "\n" {
            textView.resignFirstResponder()
         }
+        return true
+    }
+    
+    internal func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        self.delegate.textViewTapped()
         return true
     }
     

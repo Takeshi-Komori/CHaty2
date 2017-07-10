@@ -20,7 +20,7 @@ class ReportUtil: NSObject {
         let action2 = UIAlertAction(title: "ブロックする", style: UIAlertActionStyle.default, handler: {
             (action: UIAlertAction!) in
             print(user)
-            let block = Block.init(userID: user.userID, userName: user.name)
+            let block = Block.init(userID: user.userID, userName: user.name, isfromMe: "true")
             block.createBlock(userID: user.userID, userName: user.name)
             Block.saveBlock(block: block)
             

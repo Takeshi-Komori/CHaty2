@@ -29,6 +29,7 @@ class SubInfoEditTableViewCell: UITableViewCell {
     func setUI(cellNumber: Int) {
         let label = UILabel(frame: CGRect.init(x: 15, y: 12.5, width: 50, height: 25))
         label.text = subinfoCellTitles[cellNumber - 1]
+        label.font = UIFont.systemFont(ofSize: 15)
         contentView.addSubview(label)
         infoLabel = UILabel(frame: CGRect.init(x: label.right + 15, y: label.top, width: screenWidth - label.right - 35, height: 25))
         infoLabel.textAlignment = NSTextAlignment.right

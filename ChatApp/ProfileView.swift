@@ -46,7 +46,7 @@ class ProfileView: UIView {
     
     func setValueUserInfo2(user: User) {
         self.user = user
-        nameLabel.text = user.name != "" ? user.name : "未設定"
+//        nameLabel.text = user.name != "" ? user.name : "未設定"
         genderLabel.text = user.gender != "" ? user.gender : "未設定"
         ageLabel.text = user.age != 0 ? String(user.age) : "未設定"
         placeLabel.text = user.place != "" ? user.place : "未設定"
@@ -71,25 +71,19 @@ class ProfileView: UIView {
         horizontalLine.backgroundColor = UIColor.rgb(r: 192, g: 192, b: 192, alpha: 1.0)
         self.addSubview(horizontalLine)
         
-        nameLabel = UILabel(frame: CGRect(x: profImageView.left, y: horizontalLine.bottom + 30, width: 150, height: 20))
-        nameLabel.textColor = UIColor.rgb(r: 192, g: 192, b: 192, alpha: 1.0)
-        nameLabel.textAlignment = NSTextAlignment.center
-        nameLabel.font = UIFont.systemFont(ofSize: 20)
-        self.addSubview(nameLabel)
-        
-        genderLabel = UILabel(frame: CGRect(x: funcButton.left, y: nameLabel.bottom + 15, width: 60, height: 15))
+        genderLabel = UILabel(frame: CGRect(x: funcButton.left, y: horizontalLine.bottom + 30, width: 70, height: 15))
         genderLabel.textColor = UIColor.rgb(r: 192, g: 192, b: 192, alpha: 1.0)
         genderLabel.textAlignment = NSTextAlignment.center
         genderLabel.font = UIFont.systemFont(ofSize: 13)
         self.addSubview(genderLabel)
         
-        ageLabel = UILabel(frame: CGRect(x: genderLabel.right + 10, y: genderLabel.top, width: 60, height: 15))
+        ageLabel = UILabel(frame: CGRect(x: genderLabel.right, y: genderLabel.top, width: 60, height: 15))
         ageLabel.textColor = UIColor.rgb(r: 192, g: 192, b: 192, alpha: 1.0)
         ageLabel.textAlignment = NSTextAlignment.center
         ageLabel.font = UIFont.systemFont(ofSize: 13)
         self.addSubview(ageLabel)
         
-        placeLabel = UILabel(frame: CGRect(x: ageLabel.right + 10, y: genderLabel.top, width: 60, height: 15))
+        placeLabel = UILabel(frame: CGRect(x: ageLabel.right, y: genderLabel.top, width: 70, height: 15))
         placeLabel.textColor = UIColor.rgb(r: 192, g: 192, b: 192, alpha: 1.0)
         placeLabel.textAlignment = NSTextAlignment.center
         placeLabel.font = UIFont.systemFont(ofSize: 13)
