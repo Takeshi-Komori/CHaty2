@@ -7,16 +7,22 @@
 //
 
 import UIKit
+import Firebase
 
 class Footprint: NSObject {
-    var blockID: String?
-    var blockingUserID: String?
-    var blockedUserID: String?
+    var userID: String!
     var createDate: NSDate?
-    var deleteFlg: Bool?
     
-    func createFootprint() {
+    
+    func createFootprint(userID: String) {
+        let date = DateUtil.createDate()
         
+        let ref = Database.database().reference()
+        let refFootprint = ref.child("footprints").child(userID).child(userID)
+        let post = [
+            "userID" : userID,
+            "data" : date
+        ]
     }
     
     func readFootprint() {

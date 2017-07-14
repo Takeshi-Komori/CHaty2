@@ -85,6 +85,10 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         let rightNavagationBarBtn = UIBarButtonItem(image: UIImage(named: "icons8-30"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(setUpSearchFilter))
         navigationItem.rightBarButtonItem = rightNavagationBarBtn
         rightNavagationBarBtn.tintColor = UIColor.white
+        
+        let leftNavagationBarBtn = UIBarButtonItem(image: UIImage(named: "icons8-reset30"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(getData))
+        navigationItem.leftBarButtonItem = leftNavagationBarBtn
+        leftNavagationBarBtn.tintColor = UIColor.white
     }
     
     func setUpSearchFilter() {
@@ -179,6 +183,10 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         let cell = searchCollectionView?.dequeueReusableCell(withReuseIdentifier: "SearchCollectionViewCell", for: indexPath) as! SearchCollectionViewCell
                 
         cell.delegate = self
+        //セルの画像が二重に表示されるのを防ぐ
+        for subview in cell.contentView.subviews{
+            subview.removeFromSuperview()
+        }
         user = self.dataSource[indexPath.row] 
         cell.setValueUserInfo2(user: user)
         cell.setUI()

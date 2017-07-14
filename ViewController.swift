@@ -22,7 +22,6 @@ class ViewController: UIViewController {
         imagesRef.getData(maxSize: 1 * 1400 * 1400) { (data, error) in
             uiimageView.image = UIImage(data: data!)
         }
-        
     }
 
     override func didReceiveMemoryWarning() {

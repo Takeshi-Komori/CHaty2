@@ -46,7 +46,6 @@ class ProfileView: UIView {
     
     func setValueUserInfo2(user: User) {
         self.user = user
-//        nameLabel.text = user.name != "" ? user.name : "未設定"
         genderLabel.text = user.gender != "" ? user.gender : "未設定"
         ageLabel.text = user.age != 0 ? String(user.age) : "未設定"
         placeLabel.text = user.place != "" ? user.place : "未設定"
@@ -121,7 +120,7 @@ class ProfileView: UIView {
             }
             profImageView.image = Me.sharedMe.returnLocalImage()
         } else {
-            profImageView.sd_setImage(with: User.returnImgStrorageRef(userID: user.userID))
+            profImageView.sd_setImage(with: User.returnImgStrorageRef(userID: user.userID), placeholderImage: UIImage(named: "hinako.jpg"))
         }
     }
 

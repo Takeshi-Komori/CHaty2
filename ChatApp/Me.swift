@@ -23,16 +23,9 @@ class Me: NSObject {
     }
     
     func createMe(name: String, gender: String, age: Int, place: String, biography: String) {
-        let now = Date()
-        let dateFormatter = DateFormatter()
-        let date: String!
         let uuid = NSUUID().uuidString
         imageHaving = false
-        
-        dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP") as Locale!
-        dateFormatter.timeStyle = .medium
-        dateFormatter.dateStyle = .medium
-        date = dateFormatter.string(from: now)
+        let date = DateUtil.createDate()
         
         //要検討
         let local_params = [
@@ -41,7 +34,9 @@ class Me: NSObject {
             "gender": gender,
             "age": age,
             "place": place,
-            "biography": biography],
+            "biography": biography,
+            "token" : UserDefaults.standard.object(forKey: "token")!
+            ],
             "userID": uuid
         ] as [String : AnyObject]
         
@@ -53,7 +48,9 @@ class Me: NSObject {
             "gender": gender,
             "age": age,
             "place": place,
-            "biography": biography],
+            "biography": biography,
+            "token" : UserDefaults.standard.object(forKey: "token")!
+            ],
             "otherInfo" : [
             "deleteFlg": false,
             "logindate" : date,
@@ -79,7 +76,9 @@ class Me: NSObject {
             "gender": gender,
             "age": age,
             "place": place,
-            "biography": biography],
+            "biography": biography,
+            "token" : UserDefaults.standard.object(forKey: "token")
+            ],
             "userID" : userID
             ] as [String : Any]
         
@@ -91,7 +90,8 @@ class Me: NSObject {
                     "gender": gender,
                     "age": age,
                     "place": place,
-                    "biography": biography
+                    "biography": biography,
+                    "token" : UserDefaults.standard.object(forKey: "token") as! String
             ] as [String : Any]
         
         let childUpdates = ["/users/\(userID)/info" : userInfo]
@@ -104,6 +104,7 @@ class Me: NSObject {
     func deleteMe() {
         let userID: String = middleUpdating()
         self.ref.child("users").child(userID).removeValue()
+        self.ref.child("blocks").child(userID).removeValue()
         UserSpec.deleteUserSpecData()
     }
     
@@ -178,6 +179,8 @@ class Me: NSObject {
     func returnMe4User() -> User {
         var me: User!
         if isResistered() {
+            
+            
             let userInfo = userDefaults.object(forKey: "ME") as! [String : Any]
             me = User(attributed: userInfo as [String : AnyObject], key: userInfo["userID"] as! String)
             return me
@@ -188,7 +191,9 @@ class Me: NSObject {
                 "gender": "",
                 "age": 0,
                 "place": "",
-                "biography": ""]] as [String : AnyObject]
+                "biography": "",
+                "token" : ""
+            ]] as [String : AnyObject]
         me = User(attributed: defalut_params, key: "00000000-0000-0000-0000-000000000000")
         return me
     }

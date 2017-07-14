@@ -11,7 +11,7 @@ import UIKit
 class SettingTableViewController: UITableViewController {
     
     let settingTitles4Cell = [
-        ["プロフィール編集", "足跡", "ブロックリスト"],
+        ["プロフィール編集", "ブロックリスト"],
         ["お問い合わせ", "アカウント削除"]
     ]
     
@@ -71,8 +71,6 @@ class SettingTableViewController: UITableViewController {
                 let profileEditVC = ProfileEditViewController()
                 self.navigationController?.pushViewController(profileEditVC, animated: true)
             case 1:
-                print("")
-            case 2:
                 print("")
                 let blockListTableVC = BlockTableViewController()
                 self.navigationController?.pushViewController(blockListTableVC, animated: true)

@@ -30,7 +30,8 @@ class SearchCollectionViewCell: UICollectionViewCell {
     
     func setUI() {
         profImageView = UIImageView(frame: CGRect(x: 10, y: 10, width: cellWidth - 20, height: cellWidth - 20))
-        profImageView.sd_setImage(with: User.returnImgStrorageRef(userID: user.userID))
+//        profImageView.sd_setImage(with: User.returnImgStrorageRef(userID: user.userID))
+        profImageView.sd_setImage(with: User.returnImgStrorageRef(userID: user.userID), placeholderImage: UIImage(named: "hinako.jpg"))
         profImageView.layer.cornerRadius = (cellWidth - 20) / 2
         profImageView.clipsToBounds = true
         profImageView.contentMode = UIViewContentMode.scaleAspectFill

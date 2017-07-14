@@ -29,7 +29,6 @@ class BlockTableViewController: UITableViewController {
                                                selector: #selector(blockCreate),
                                                name: NSNotification.Name(rawValue: "blockCreate"),
                                                object: nil)
-        
         self.setUpNavigationBarItemBtn()
     }
     
@@ -114,7 +113,7 @@ class BlockTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 60
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

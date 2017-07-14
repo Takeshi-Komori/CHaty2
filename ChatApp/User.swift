@@ -18,6 +18,7 @@ class User: NSObject {
     var biography: String!
     var userID: String!
     var chatroomID: String! //Meに対してのチャットルームID
+    var token: String!
     
     init(attributed: [String : AnyObject], key: String) {
         super.init()
@@ -28,6 +29,7 @@ class User: NSObject {
         self.age = userInfo?["age"] as! Int!
         self.place = userInfo?["place"] as! String
         self.biography = userInfo?["biography"] as! String
+        self.token = userInfo?["token"] as! String
         self.userID = key
     }
     
@@ -37,6 +39,7 @@ class User: NSObject {
         var userDataSource = Array<User>()
         DispatchQueue.main.async {
             ref.child("users").observeSingleEvent(of: DataEventType.value, with: { (snapshot) in
+                print(snapshot)
                 if !(snapshot.value is NSNull) {
                     users = snapshot.value as! [String : [String : AnyObject]] as [String : AnyObject]
                     for item in users {
@@ -63,6 +66,8 @@ class User: NSObject {
                             userDataSource.append(user)
                         }
                     }
+                }else {
+                    completionHandler(userDataSource)
                 }
                 completionHandler(userDataSource)
             })

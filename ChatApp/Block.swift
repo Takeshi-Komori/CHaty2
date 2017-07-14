@@ -40,14 +40,7 @@ class Block: NSObject, NSCoding {
     
     //firebase
     func createBlock(userID: String, userName: String) {
-        let now = Date()
-        let dateFormatter = DateFormatter()
-        let date: String!
-        
-        dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP") as Locale!
-        dateFormatter.timeStyle = .medium
-        dateFormatter.dateStyle = .medium
-        date = dateFormatter.string(from: now)
+        let date = DateUtil.createDate()
         
         let ref = Database.database().reference()
         let blockRef4Me = ref.child("blocks").child(Me.sharedMe.returnInfo(key: "userID") as! String).child(userID)

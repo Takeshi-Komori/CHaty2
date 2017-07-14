@@ -63,68 +63,12 @@ class ProfileEditViewController: UITableViewController ,UIPickerViewDelegate, UI
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tableView.reloadSections(NSIndexSet.init(index: 0) as IndexSet, with: UITableViewRowAnimation.fade)
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeShown), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
-//        
-//        if Me.sharedMe.isResistered() {
-//            
-//        }
     }
-    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-//        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidHide, object: nil)
-//    }
-//    
-//    func keyboardWillBeShown(notification: Notification) {
-//        if textViewEditing != nil && textViewEditing {
-//            if let userInfo = notification.userInfo {
-//                if let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey], let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] {
-//                    let keyboardFrame4normal = (keyboardFrame as AnyObject).cgRectValue
-//                    
-//                    print(keyboardFrame4normal)
-//                    
-//                    UIView.animate(withDuration: animationDuration as! TimeInterval, animations: { 
-//                        
-//                    })
-//                    
-//                    let convertedKeyboardFrame = bioEditCell.textView.convert(keyboardFrame4normal!, to: nil)
-////                    let offsetY: CGFloat = bioEditCell.textView.frame.maxY - convertedKeyboardFrame.minY
-//                    let offsetY: CGFloat = convertedKeyboardFrame.minY - bioEditCell.frame.maxY
-//                    print(keyboardFrame4normal)
-//                    print(convertedKeyboardFrame.minY)
-//                    print(bioEditCell.top)
-//                    print(bioEditCell.frame.maxY)
-//                    if offsetY < 0 { return }
-//                    updateScrollViewSize(moveSize: offsetY, duration: animationDuration as! TimeInterval)
-//                }
-//            }
-//        }
-//    }
 
-//    func updateScrollViewSize(moveSize: CGFloat, duration: TimeInterval) {
-//        UIView.beginAnimations("ResizeForKeyboard", context: nil)
-//        UIView.setAnimationDuration(duration)
-//        let contentInsets = UIEdgeInsetsMake(0, 0, moveSize, 0)
-//        self.tableView.contentInset = contentInsets
-//        self.tableView.scrollIndicatorInsets = contentInsets
-//        self.tableView.contentOffset = CGPoint(x: 0, y: moveSize)
-//        UIView.commitAnimations()
-//    }
-//    
-//    func keyboardWillBeHidden(notification: Notification) {
-//        if textViewEditing != nil && textViewEditing {
-//            self.tableView.contentInset = UIEdgeInsets.zero
-//            self.tableView.scrollIndicatorInsets = UIEdgeInsets.zero
-//            textViewEditing = false
-//        }
-//    }
     
     private func setWindow() {
         window = UIWindow.init(frame: self.view.bounds)
         window.backgroundColor = UIColor.clear
-//        window.makeKeyAndVisible()
     }
     
     private func setPickerItems() {
@@ -344,6 +288,7 @@ class ProfileEditViewController: UITableViewController ,UIPickerViewDelegate, UI
             imagePickerController.sourceType = .camera
             imagePickerController.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
             imagePickerController.allowsEditing = true
+//            imagePickerController.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
             self.present(imagePickerController, animated: true, completion: nil)
         })
         
@@ -353,6 +298,7 @@ class ProfileEditViewController: UITableViewController ,UIPickerViewDelegate, UI
             imagePickerController.sourceType = .photoLibrary
             imagePickerController.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
             imagePickerController.allowsEditing = true
+            imagePickerController.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
             
             self.present(imagePickerController, animated: true, completion: nil)
         })

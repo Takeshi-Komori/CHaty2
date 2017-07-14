@@ -32,7 +32,6 @@ class MessagesViewController: JSQMessagesViewController {
     
     override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: Bundle!) {
         super.init(nibName: nil, bundle: nil)
-        
     }
     
     convenience init(user: User) {
@@ -53,14 +52,13 @@ class MessagesViewController: JSQMessagesViewController {
         //吹き出しの設定
         let bubbleFactory = JSQMessagesBubbleImageFactory()
         self.incomingBubble = bubbleFactory?.incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
-        self.outgoingBubble = bubbleFactory?.outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleGreen())
+        self.outgoingBubble = bubbleFactory?.outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleBlue())
         
         //アバターの設定
         self.incomingAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: Me.sharedMe.returnLocalImage(), diameter: 64)
         setUpOutgoingAvatarImg()
         messages = []
         setBarButtonItem()
-        
         // Do any additional setup after loading the view.
     }
     
@@ -77,7 +75,7 @@ class MessagesViewController: JSQMessagesViewController {
     
     func tapLeftBarButton(sender: UIBarButtonItem) {
         if messages?.count == 0 && chatroom.isAlreadyCreated != true {
-            Chatroom().deleteChatroom(opponentUserID2: opponentUser.userID, chatroomID: opponentUser.chatroomID)
+//            Chatroom().deleteChatroom(opponentUserID2: opponentUser.userID, chatroomID: opponentUser.chatroomID)
         }
         navigationController?.popViewController(animated: true)
     }
@@ -97,6 +95,9 @@ class MessagesViewController: JSQMessagesViewController {
             let imgRef = User.returnImgStrorageRef(userID: opponentUser.userID)
             imgRef.getData(maxSize: 1 * 4000 * 4000) { (data, error) in
                 if error != nil {
+                    self.outgoingAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(named: "hinako.jpg"), diameter: 64)
+                    self.collectionView.reloadData()
+                    SVProgressHUD.dismiss()
                     return
                 }
                 self.outgoingAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(data: data!), diameter: 64)
@@ -117,6 +118,7 @@ class MessagesViewController: JSQMessagesViewController {
     
     func sendTextToDb(text: String) {
         Message.createMessage(message: text, senderID: self.senderId, chatroomID: chatroom.chatRoomID!)
+        SendNotificationHelper.sendNotification(contents: text, token: opponentUser.token, userName: opponentUser.name)
         self.inputToolbar.contentView.textView.text = ""
     }
     
