@@ -18,12 +18,19 @@ class SendNotificationHelper: NSObject {
         
         let notificationDetail = [
             "body" : contents,
-            "title" : userName
+            "title" : "CHaty : \(userName)",
+            "badge" : "1"
         ]
+        
+        let notificationDetail2 = [
+            "body" : "aaaaaaaaaaaaaaaaaaa",
+            "title" : "っっっっっっっっっっk)"
+        ]
+        
         let data = [
             "to" : token,
             "notification" : notificationDetail,
-            "data" : notificationDetail,
+            "data" : notificationDetail2,
             "priority" : "high"
         ] as [String : Any]
 
