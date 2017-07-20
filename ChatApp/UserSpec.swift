@@ -32,7 +32,6 @@ class UserSpec: NSObject {
     }
     
     
-    
     //検索 blockしていた場合や自分を含めないなど考慮すると、長くなった
     static func researchUserSpec(isBlocingSomeone: Bool ,gender: String, age: String, place: String, completionHandler: @escaping (Array<Any>) -> Void) {
         let brockDataSource = Block.readBlockDataSource()

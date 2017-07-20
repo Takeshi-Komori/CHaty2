@@ -19,7 +19,6 @@
 		F8185AF61EFE403C00A12BD9 /* Chatroom.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8185AF51EFE403C00A12BD9 /* Chatroom.swift */; };
 		F8185AF81EFE406E00A12BD9 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8185AF71EFE406E00A12BD9 /* Message.swift */; };
 		F8185AFA1EFE40EC00A12BD9 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8185AF91EFE40EC00A12BD9 /* Block.swift */; };
-		F8185AFC1EFE411600A12BD9 /* Footprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8185AFB1EFE411600A12BD9 /* Footprint.swift */; };
 		F8185B001EFE675000A12BD9 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8185AFF1EFE675000A12BD9 /* TabbarViewController.swift */; };
 		F8185B041EFE758D00A12BD9 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8185B031EFE758D00A12BD9 /* SearchCollectionViewCell.swift */; };
 		F8185B081EFE7CA600A12BD9 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8185B071EFE7CA600A12BD9 /* ProfileView.swift */; };
@@ -38,14 +37,12 @@
 		F875A2A31F0D814A000EEE0B /* ReportUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = F875A2A21F0D814A000EEE0B /* ReportUtil.swift */; };
 		F875A2A71F0D937D000EEE0B /* SearchFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F875A2A61F0D937D000EEE0B /* SearchFilterView.swift */; };
 		F87EF7651EFF783C00A56EAB /* BlockTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87EF7641EFF783C00A56EAB /* BlockTableViewController.swift */; };
-		F87EF7671EFF788E00A56EAB /* FootprintTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87EF7661EFF788E00A56EAB /* FootprintTableViewController.swift */; };
 		F87FA5C31F132C0A00F6EF5F /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87FA5C21F132C0A00F6EF5F /* DateUtil.swift */; };
 		F880B4FE1F0F25CD0083D76E /* BlockListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F880B4FD1F0F25CD0083D76E /* BlockListTableViewCell.swift */; };
 		F889C29D1EFCC94700669DF1 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F889C29C1EFCC94700669DF1 /* UIView+Extension.swift */; };
 		F8C181C51EF7321F0003744D /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C181C41EF7321F0003744D /* SettingTableViewController.swift */; };
 		F8C181C71EF73EC60003744D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C181C61EF73EC60003744D /* ProfileViewController.swift */; };
 		F8DBFA161EF85E7D006061A1 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DBFA151EF85E7D006061A1 /* SearchViewController.swift */; };
-		F8E7369A1F0B566D00CDD52B /* ChatRoomDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E736991F0B566D00CDD52B /* ChatRoomDataSource.swift */; };
 		F8E856631F0C5FB600812920 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E856621F0C5FB600812920 /* ViewController.swift */; };
 		F8EEE58C1F07833400313E0D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EEE58B1F07833400313E0D /* User.swift */; };
 		F8F4D7061EF9B22E005DE1A7 /* ChatListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F4D7051EF9B22E005DE1A7 /* ChatListTableViewCell.swift */; };
@@ -85,7 +82,6 @@
 		F8185AF51EFE403C00A12BD9 /* Chatroom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chatroom.swift; sourceTree = "<group>"; };
 		F8185AF71EFE406E00A12BD9 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		F8185AF91EFE40EC00A12BD9 /* Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
-		F8185AFB1EFE411600A12BD9 /* Footprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Footprint.swift; sourceTree = "<group>"; };
 		F8185AFF1EFE675000A12BD9 /* TabbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
 		F8185B031EFE758D00A12BD9 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		F8185B071EFE7CA600A12BD9 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -112,14 +108,12 @@
 		F875A2A21F0D814A000EEE0B /* ReportUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportUtil.swift; sourceTree = "<group>"; };
 		F875A2A61F0D937D000EEE0B /* SearchFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilterView.swift; sourceTree = "<group>"; };
 		F87EF7641EFF783C00A56EAB /* BlockTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockTableViewController.swift; sourceTree = "<group>"; };
-		F87EF7661EFF788E00A56EAB /* FootprintTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FootprintTableViewController.swift; sourceTree = "<group>"; };
 		F87FA5C21F132C0A00F6EF5F /* DateUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
 		F880B4FD1F0F25CD0083D76E /* BlockListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockListTableViewCell.swift; sourceTree = "<group>"; };
 		F889C29C1EFCC94700669DF1 /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		F8C181C41EF7321F0003744D /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		F8C181C61EF73EC60003744D /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F8DBFA151EF85E7D006061A1 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		F8E736991F0B566D00CDD52B /* ChatRoomDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomDataSource.swift; sourceTree = "<group>"; };
 		F8E856621F0C5FB600812920 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F8EEE58B1F07833400313E0D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F8F4D7051EF9B22E005DE1A7 /* ChatListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListTableViewCell.swift; sourceTree = "<group>"; };
@@ -189,11 +183,9 @@
 				F8185AF51EFE403C00A12BD9 /* Chatroom.swift */,
 				F8185AF71EFE406E00A12BD9 /* Message.swift */,
 				F8185AF91EFE40EC00A12BD9 /* Block.swift */,
-				F8185AFB1EFE411600A12BD9 /* Footprint.swift */,
 				F8185AF01EFDFC3200A12BD9 /* SourceItem.swift */,
 				F8EEE58B1F07833400313E0D /* User.swift */,
 				F83875BF1F0836C0006AA469 /* UserDataSource.swift */,
-				F8E736991F0B566D00CDD52B /* ChatRoomDataSource.swift */,
 				F875A2A21F0D814A000EEE0B /* ReportUtil.swift */,
 				F83810E81F1083430020265A /* UserSpec.swift */,
 				F87FA5C21F132C0A00F6EF5F /* DateUtil.swift */,
@@ -224,7 +216,6 @@
 				F8F4D7071EF9B39B005DE1A7 /* ChatListViewController.swift */,
 				F80931631EFA994D00D09B08 /* MessagesViewController.swift */,
 				F87EF7641EFF783C00A56EAB /* BlockTableViewController.swift */,
-				F87EF7661EFF788E00A56EAB /* FootprintTableViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -529,15 +520,12 @@
 				F8185B081EFE7CA600A12BD9 /* ProfileView.swift in Sources */,
 				F8E856631F0C5FB600812920 /* ViewController.swift in Sources */,
 				F8C181C71EF73EC60003744D /* ProfileViewController.swift in Sources */,
-				F87EF7671EFF788E00A56EAB /* FootprintTableViewController.swift in Sources */,
 				F8185AF11EFDFC3200A12BD9 /* SourceItem.swift in Sources */,
 				F864F0831EF2447500E8675A /* AppDelegate.swift in Sources */,
 				F875A2A71F0D937D000EEE0B /* SearchFilterView.swift in Sources */,
 				F83875C01F0836C0006AA469 /* UserDataSource.swift in Sources */,
 				F8185AE11EFDD70700A12BD9 /* ProfileEditViewController.swift in Sources */,
-				F8185AFC1EFE411600A12BD9 /* Footprint.swift in Sources */,
 				F8603F421F13892700E26238 /* SendNotificationHelper.swift in Sources */,
-				F8E7369A1F0B566D00CDD52B /* ChatRoomDataSource.swift in Sources */,
 				F875A2A31F0D814A000EEE0B /* ReportUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
